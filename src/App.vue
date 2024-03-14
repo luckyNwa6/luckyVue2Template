@@ -1,13 +1,10 @@
 <template>
-  <div id="app">
+  <transition name="fade">
     <router-view></router-view>
-  </div>
+  </transition>
 </template>
 
 <script>
-export default {
-  name: 'app',
-}
+  export default {
+  }
 </script>
-
-<style></style>

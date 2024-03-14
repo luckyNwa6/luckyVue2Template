@@ -1,22 +1,15 @@
 export default {
+  namespaced: true,
   state: {
-    token: ''
-  },
-  getters: {
-    getToken(state) {
-      return state.token
-    },
-
+    id: 0,
+    name: ''
   },
   mutations: {
-    setToken(state, data) {
-      state.token = data
+    updateId (state, id) {
+      state.id = id
     },
-
-  },
-  actions: {
-    setToken({ commit }, data) {
-      commit('setToken', data)
-    },
+    updateName (state, name) {
+      state.name = name
+    }
   }
 }
