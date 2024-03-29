@@ -64,3 +64,8 @@ fix: 修复 bug
 ## 🐷 其他
 
 暂无
+
+全局格式化代码
+npm install -g prettier
+prettier --write "src/\*_/_.js"
+prettier --write "src/\*_/_.vue"

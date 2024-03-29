@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import { getFolderList } from '@/api/bed/folder/index';
+import { getFolderList } from '@/api/bed/folder/index'
 export default {
   data() {
     return {
@@ -103,14 +103,14 @@ export default {
       dataListSelections: [], //用来存放多选的对象
       findContent: '', //搜索框内容
       uploadHeaders: {
-        picToken: this.$cookie.get('token') // 添加自定义请求头
+        picToken: this.$cookie.get('token'), // 添加自定义请求头
       },
       actionUrl: '/api/luckyNwa/uploadPic',
 
       dialogVisible: false, // 控制弹框显示与隐藏
       picName: '', // 输入框1的值
-      tempId: 0 //用来存id修改时候用到
-    };
+      tempId: 0, //用来存id修改时候用到
+    }
   },
   methods: {
     handleBeforeUpload(file) {
@@ -131,9 +131,9 @@ export default {
       // 处理上传成功的逻辑
 
       if (response.code === 0) {
-        this.getYunList();
+        this.getYunList()
       } else {
-        this.failMsg(response.msg);
+        this.failMsg(response.msg)
       }
     },
 
@@ -141,15 +141,15 @@ export default {
     handleUpload() {
       this.$nextTick(() => {
         //确保在DOM更新后再执行提交操作
-        this.$refs.upload.submit(); // 提交表单
-      });
+        this.$refs.upload.submit() // 提交表单
+      })
     },
 
     modify(obj) {
-      this.dialogVisible = true; // 打开弹框
-      this.picName = obj.picName;
-      this.tempId = obj.id;
-      console.log(obj);
+      this.dialogVisible = true // 打开弹框
+      this.picName = obj.picName
+      this.tempId = obj.id
+      console.log(obj)
       // this.$message.error('功能正在开发中....')
     },
     confirmDialog() {
@@ -157,18 +157,18 @@ export default {
       modifyInfo({
         id: this.tempId,
         picName: this.picName,
-        folder: this.selectedValue
-      }).then(res => {
-        this.successMsg(res.msg);
-        this.getYunList();
-      });
+        folder: this.selectedValue,
+      }).then((res) => {
+        this.successMsg(res.msg)
+        this.getYunList()
+      })
 
-      this.closeDialog(); // 关闭弹框
+      this.closeDialog() // 关闭弹框
     },
     closeDialog() {
-      this.dialogVisible = false; // 关闭弹框
-      this.tempId = 0;
-      this.picName = '';
+      this.dialogVisible = false // 关闭弹框
+      this.tempId = 0
+      this.picName = ''
     },
     //获取图片列表
     getYunList() {
@@ -179,94 +179,94 @@ export default {
           picName: this.findContent || 'pic',
           folder: this.selectedValue,
           page: 1,
-          limit: 100
-        })
+          limit: 100,
+        }),
       }).then(({ data }) => {
         if (data && data.code === 0) {
-          console.log('🚀 ~ getYunList ~ data:', data);
-          this.$data.tableData = data.list;
+          console.log('🚀 ~ getYunList ~ data:', data)
+          this.$data.tableData = data.list
         } else {
-          this.$message.error(data.msg);
+          this.$message.error(data.msg)
         }
-      });
+      })
     },
     //删除图片
     delOssPic(obj) {
       if (this.dataListSelections.length === 0) {
         if (obj instanceof PointerEvent) {
-          this.failMsg('请先选择要删除的框！');
-          return;
+          this.failMsg('请先选择要删除的框！')
+          return
         }
       }
       var ids = obj.id //处理完[]这种包着的
         ? [obj.id]
-        : this.dataListSelections.map(item => {
-            return item.id;
-          });
+        : this.dataListSelections.map((item) => {
+            return item.id
+          })
 
       this.$confirm(`确定对[id=${ids.join(',')}]进行[${obj.id ? '删除' : '批量删除'}]操作?`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
+        type: 'warning',
       })
         .then(() => {
           //不管单还是多都是传一个数组就行
-          delRemotePic(ids, this.selectedValue).then(res => {
-            this.successMsg(res.msg);
-            this.getYunList();
-          });
+          delRemotePic(ids, this.selectedValue).then((res) => {
+            this.successMsg(res.msg)
+            this.getYunList()
+          })
         })
-        .catch(() => {});
+        .catch(() => {})
     },
 
     //复选框
     handleSelectionChange(val) {
-      this.dataListSelections = val;
+      this.dataListSelections = val
     },
     //查找图片
     searchPic() {
-      this.getYunList();
+      this.getYunList()
     },
     // 每页条数改变时触发，选中一页显示多少行
     handleSizeChange(val) {
-      console.log(`每页${val}条`);
-      this.currentPage = 1;
-      this.pageSize = val;
+      console.log(`每页${val}条`)
+      this.currentPage = 1
+      this.pageSize = val
     },
     handleCurrentChange(val) {
-      console.log(`当前页:${val}`);
-      this.currentPage = val;
+      console.log(`当前页:${val}`)
+      this.currentPage = val
     },
     //表格样式
     tableCellStyle() {
-      return 'border-color: #868686;';
+      return 'border-color: #868686;'
     },
 
     tableHeaderCellStyle() {
-      return 'border-color: #868686; color: #606266;';
-    }
+      return 'border-color: #868686; color: #606266;'
+    },
   },
 
   created() {
-    this.getYunList();
+    this.getYunList()
 
     //获取文件夹列表,处理成下拉框数据
     getFolderList({
       folderName: '',
-      userId: 1
+      userId: 1,
     }).then(({ data }) => {
       if (data && data.code === 0) {
-        console.log('🚀 ~ getYunList ~ data:', data);
-        this.options = data.data.map(folder => ({
+        console.log('🚀 ~ getYunList ~ data:', data)
+        this.options = data.data.map((folder) => ({
           value: folder.folderName,
-          label: folder.folderName
-        }));
+          label: folder.folderName,
+        }))
       } else {
-        this.$message.error(data.msg);
+        this.$message.error(data.msg)
       }
-    });
-  }
-};
+    })
+  },
+}
 </script>
 
 <style>
