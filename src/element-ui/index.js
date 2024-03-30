@@ -73,6 +73,7 @@ import {
   Main,
   Footer,
   Loading,
+  Image,
   MessageBox,
   Message,
   Notification,
@@ -139,6 +140,7 @@ Vue.use(Transfer)
 Vue.use(Container)
 Vue.use(Header)
 Vue.use(Aside)
+Vue.use(Image)
 Vue.use(Main)
 Vue.use(Footer)
 

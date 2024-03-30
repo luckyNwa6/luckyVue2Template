@@ -17,14 +17,14 @@
 
         <el-form-item>
           <!-- <el-button type="primary" @click="login">登录</el-button> -->
-          <vi-button v-preventReClick @click="login">登录</vi-button>
+          <ViButton v-preventReClick @click="login">登录</ViButton>
           <!-- <vi-button button-type="success" @click="login">登录</vi-button> -->
         </el-form-item>
 
         <el-image
           @click="goQQ"
           style="position: absolute; top: 340px; right: 100px"
-          src="require('@/assets/img/Connect_logo_7.webp')"
+          :src="require('@/assets/img/Connect_logo_7.png')"
           fit="contain"
         ></el-image>
       </el-form>
@@ -56,14 +56,14 @@ import { getQQ, getPersonInfo, reqLogin } from '@/api/login'
 import { yh } from '@/assets/js/yinHua.js'
 // import { getUUID } from '@/utils'
 export default {
-  components: ['ViButton'],
+  components: { ViButton },
   data() {
     return {
       form: {
         acc: 'admin',
         pwd: '123456',
       },
-      // url: require('@/assets/img/Connect_logo_7.webp'),
+      qqImg: require('@/assets/img/Connect_logo_7.webp'),
       yzmInput: '',
       yzmm: '',
       currentDateTime: '',
@@ -83,9 +83,9 @@ export default {
   },
   methods: {
     login() {
-      this.$refs.loginForm.validate((valid) => {
+      this.$refs.loginForm.validate(valid => {
         if (valid) {
-          if (this.yzmInput.toLowerCase() !== this.yzmm.toLowerCase()) {
+          if (this.yzmInput.toLowerCase() === this.yzmm.toLowerCase()) {
             this.failMsg('验证码有误！')
 
             this.yzmm = this.$options.methods.showCode()
@@ -97,25 +97,28 @@ export default {
               openCaptcha: false,
               uuid: '',
             }
-            reqLogin(data).then((res) => {
+            reqLogin(data).then(res => {
+              console.log('🚀 ~ reqLogin ~ res:', res)
               //session会话级，关闭浏览器，token就没了，1登录，开2窗口
               //会出现还需要登录的情况
               // sessionStorage.setItem("token", res.luckyToken);
               //cookie，浏览器关闭也能保持登录状态
-              if (res.code == 0) {
-                this.$cookie.set('token', res.token)
-                this.successMsg(res.msg)
+              if (res.data.code === 0) {
+                console.log('🚀 ~ reqLogin ~ res:', res)
+                this.$cookie.set('token', res.data.token)
+                this.successMsg(res.data.msg)
                 this.$router.replace({ name: 'home' })
               } else {
-                this.failMsg(res.msg)
+                this.failMsg(res.data.msg)
                 this.yzmm = this.$options.methods.showCode()
-                this.$router.push('/')
+                this.$router.push({ name: 'login' })
               }
             })
           }
         }
       })
     },
+
     //更新时间
     updateDateTime() {
       setInterval(() => {
@@ -139,7 +142,8 @@ export default {
 
     //获取qq的跳转链接
     goQQ() {
-      getQQ().then((res) => {
+      console.log('zzxxx')
+      getQQ().then(res => {
         console.log('请求新的URL去验证第三方的QQ！！！')
         window.location.href = res
       })
@@ -159,11 +163,11 @@ export default {
     console.log('🚀 ~ mounted ~ openId:', openId)
 
     if (token !== '' && token !== null && openId !== '' && openId !== null) {
-      this.$cookie.set('picToken', token)
+      this.$cookie.set('token', token)
       console.log('开始获取个人信息！')
 
       // 在这里将 openId 作为参数传递给 getPersonInfo 方法
-      getPersonInfo(openId).then((res) => {
+      getPersonInfo(openId).then(res => {
         console.log('🚀 ~ getPersonInfo ~ res:', res)
         if (res.code === 0) {
           this.$cookie.set('picData', JSON.stringify(res.data))
@@ -171,6 +175,12 @@ export default {
           this.$router.push('/home')
         }
       })
+    }
+  },
+  beforeDestroy() {
+    const script = document.querySelector('script[src="yinHua.js"]')
+    if (script) {
+      script.parentNode.removeChild(script)
     }
   },
   created() {
@@ -195,21 +205,21 @@ export default {
        opacityDefault 默认透明度
        opacityOnHover 鼠标悬浮透明度
   */
-    // setTimeout(() => {
-    //   window.L2Dwidget.init({
-    //     pluginRootPath: '../live2dw/',
-    //     pluginJsPath: 'lib/',
-    //     pluginModelPath: 'live2d-widget-model-haru_1/assets/', //中间这个haru_2就是你的老婆,想换个老婆,换这个就可以了
-    //     tagMode: false,
-    //     debug: false,
-    //     model: {
-    //       jsonPath: '../live2dw/live2d-widget-model-haru_1/assets/haru01.model.json',
-    //     },
-    //     display: { position: 'left', width: 150, height: 400 }, //调整大小,和位置
-    //     mobile: { show: true }, //要不要盯着你的鼠标看
-    //     log: false,
-    //   })
-    // }, 1000)
+    setTimeout(() => {
+      window.L2Dwidget.init({
+        pluginRootPath: '../static/plugins/live2dw/',
+        pluginJsPath: 'lib/',
+        pluginModelPath: 'live2d-widget-model-haru_1/assets/', //中间这个haru_2就是你的老婆,想换个老婆,换这个就可以了
+        tagMode: false,
+        debug: false,
+        model: {
+          jsonPath: '../static/plugins/live2dw/live2d-widget-model-haru_1/assets/haru01.model.json',
+        },
+        display: { position: 'left', width: 150, height: 400 }, //调整大小,和位置
+        mobile: { show: true }, //要不要盯着你的鼠标看
+        log: false,
+      })
+    }, 1000)
   },
 }
 </script>
@@ -240,10 +250,7 @@ export default {
   width: 400px;
   height: 400px;
   padding: 60px 20px;
-  box-shadow:
-    inset 20px 20px 20px rgba(0, 0, 0, 0.05),
-    25px 35px 20px rgba(0, 0, 0, 0.05),
-    25px 30px 30px rgba(0, 0, 0, 0.05),
+  box-shadow: inset 20px 20px 20px rgba(0, 0, 0, 0.05), 25px 35px 20px rgba(0, 0, 0, 0.05), 25px 30px 30px rgba(0, 0, 0, 0.05),
     inset -20px -20px 25px rgba(255, 255, 255, 0.9);
   transition: 0.5s;
   border-radius: 52% 48% 33% 67%/ 38% 45% 55% 62%;
@@ -333,9 +340,7 @@ export default {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shine 10s linear infinite;
-  font-family:
-    dancing script,
-    cursive;
+  font-family: dancing script, cursive;
   font-weight: 700;
 }
 
