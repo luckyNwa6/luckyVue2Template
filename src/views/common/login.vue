@@ -63,7 +63,7 @@ export default {
         acc: 'admin',
         pwd: '123456',
       },
-      qqImg: require('@/assets/img/Connect_logo_7.webp'),
+
       yzmInput: '',
       yzmm: '',
       currentDateTime: '',
