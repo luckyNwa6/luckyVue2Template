@@ -22,7 +22,7 @@
         </el-form-item>
 
         <el-image
-          @click="goQQ"
+          @click="goQQ()"
           style="position: absolute; top: 340px; right: 100px"
           :src="require('@/assets/img/Connect_logo_7.png')"
           fit="contain"
@@ -54,7 +54,7 @@ import '@luckynwa-lib/vi-button/dist/index.css'
 
 import { getQQ, getPersonInfo, reqLogin } from '@/api/login'
 import { yh } from '@/assets/js/yinHua.js'
-// import { getUUID } from '@/utils'
+
 export default {
   components: { ViButton },
   data() {
@@ -63,7 +63,6 @@ export default {
         acc: 'admin',
         pwd: '123456',
       },
-
       yzmInput: '',
       yzmm: '',
       currentDateTime: '',
@@ -177,12 +176,7 @@ export default {
       })
     }
   },
-  beforeDestroy() {
-    const script = document.querySelector('script[src="yinHua.js"]')
-    if (script) {
-      script.parentNode.removeChild(script)
-    }
-  },
+
   created() {
     yh
     this.updateDateTime()
@@ -205,21 +199,21 @@ export default {
        opacityDefault 默认透明度
        opacityOnHover 鼠标悬浮透明度
   */
-    setTimeout(() => {
-      window.L2Dwidget.init({
-        pluginRootPath: '../static/plugins/live2dw/',
-        pluginJsPath: 'lib/',
-        pluginModelPath: 'live2d-widget-model-haru_1/assets/', //中间这个haru_2就是你的老婆,想换个老婆,换这个就可以了
-        tagMode: false,
-        debug: false,
-        model: {
-          jsonPath: '../static/plugins/live2dw/live2d-widget-model-haru_1/assets/haru01.model.json',
-        },
-        display: { position: 'left', width: 150, height: 400 }, //调整大小,和位置
-        mobile: { show: true }, //要不要盯着你的鼠标看
-        log: false,
-      })
-    }, 1000)
+    // setTimeout(() => {
+    //   window.L2Dwidget.init({
+    //     pluginRootPath: '../static/plugins/live2dw/',
+    //     pluginJsPath: 'lib/',
+    //     pluginModelPath: 'live2d-widget-model-haru_1/assets/', //中间这个haru_2就是你的老婆,想换个老婆,换这个就可以了
+    //     tagMode: false,
+    //     debug: false,
+    //     model: {
+    //       jsonPath: '../static/plugins/live2dw/live2d-widget-model-haru_1/assets/haru01.model.json',
+    //     },
+    //     display: { position: 'left', width: 150, height: 400 }, //调整大小,和位置
+    //     mobile: { show: true }, //要不要盯着你的鼠标看
+    //     log: false,
+    //   })
+    // }, 1000)
   },
 }
 </script>
