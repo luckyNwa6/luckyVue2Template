@@ -69,3 +69,13 @@ fix: 修复 bug
 npm install -g prettier
 prettier --write "src/\*_/_.js"
 prettier --write "src/\*_/_.vue"
+
+## 部署
+
+静态资源需要反向代理
+
+```conf
+  location /static {
+    proxy_pass http://luckynwa.top:10086/luckyAdmin/;
+  }
+```

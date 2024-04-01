@@ -1,16 +1,14 @@
 /**
  * 生产环境
  */
-(function() {
-  window.SITE_CONFIG = {};
+;(function() {
+  window.SITE_CONFIG = {}
 
   // api接口请求地址
-  window.SITE_CONFIG["baseUrl"] =
-    "http://demo.open.renren.io/luckyAdmin-server";
+  window.SITE_CONFIG['baseUrl'] = 'https://luckynwa.top/proxyApi/'
 
   // cdn地址 = 域名 + 版本号
-  window.SITE_CONFIG["domain"] = "./"; // 域名
-  window.SITE_CONFIG["version"] = ""; // 版本号(年月日时分)
-  window.SITE_CONFIG["cdnUrl"] =
-    window.SITE_CONFIG.domain + window.SITE_CONFIG.version;
-})();
+  window.SITE_CONFIG['domain'] = 'https://luckynwa.top/static/' //这里需要反向代理到静态图床地址
+  window.SITE_CONFIG['version'] = '202404011008' // 版本号(年月日时分)
+  window.SITE_CONFIG['cdnUrl'] = window.SITE_CONFIG.domain + window.SITE_CONFIG.version
+})()

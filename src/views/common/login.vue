@@ -21,12 +21,9 @@
           <!-- <vi-button button-type="success" @click="login">登录</vi-button> -->
         </el-form-item>
 
-        <el-image
-          @click="goQQ()"
-          style="position: absolute; top: 340px; right: 100px"
-          :src="require('@/assets/img/Connect_logo_7.png')"
-          fit="contain"
-        ></el-image>
+        <div @click="goQQ" style="position: absolute; top: 340px; right: 100px">
+          <el-image :src="require('@/assets/img/Connect_logo_7.png')" fit="contain"></el-image>
+        </div>
       </el-form>
     </div>
     <div style="margin: 0 auto; width: 900px; position: absolute; left: 29%; bottom: 0">
@@ -86,7 +83,6 @@ export default {
         if (valid) {
           if (this.yzmInput.toLowerCase() === this.yzmm.toLowerCase()) {
             this.failMsg('验证码有误！')
-
             this.yzmm = this.$options.methods.showCode()
           } else {
             let data = {
@@ -103,7 +99,7 @@ export default {
               // sessionStorage.setItem("token", res.luckyToken);
               //cookie，浏览器关闭也能保持登录状态
               if (res.data.code === 0) {
-                console.log('🚀 ~ reqLogin ~ res:', res)
+                // console.log('🚀 ~ reqLogin ~ res:', res)
                 this.$cookie.set('token', res.data.token)
                 this.successMsg(res.data.msg)
                 this.$router.replace({ name: 'home' })
@@ -141,10 +137,10 @@ export default {
 
     //获取qq的跳转链接
     goQQ() {
-      console.log('zzxxx')
       getQQ().then(res => {
-        console.log('请求新的URL去验证第三方的QQ！！！')
-        window.location.href = res
+        // console.log('🚀 ~ getQQ ~ res:', res)
+        // console.log('请求新的URL去验证第三方的QQ！！！')
+        window.location.href = res.data
       })
     },
   },
@@ -168,10 +164,9 @@ export default {
       // 在这里将 openId 作为参数传递给 getPersonInfo 方法
       getPersonInfo(openId).then(res => {
         console.log('🚀 ~ getPersonInfo ~ res:', res)
-        if (res.code === 0) {
-          this.$cookie.set('picData', JSON.stringify(res.data))
-          this.successMsg('登录成功！')
-          this.$router.push('/home')
+        if (res.data.code === 0) {
+          // this.$router.push('/home')
+          this.$router.replace({ name: 'home' })
         }
       })
     }
@@ -180,40 +175,22 @@ export default {
   created() {
     yh
     this.updateDateTime()
-    /*看板娘初始化
-    参数说明
-    model 模型的配置
-       json 文件资源路径，可以支持网络路径，此处使用的是相对路径
-       scale 模型缩放系数
-    display 模型布局
-       position 位置
-       width 宽度
-       height 高度
-       hOffset 水平偏移量
-       vOffset 垂直偏移量
-    mobile 移动端配置
-       show 显示/隐藏
-       scale 缩放比例
-    react 模型矩形框样式
-       opacity 透明度
-       opacityDefault 默认透明度
-       opacityOnHover 鼠标悬浮透明度
-  */
-    // setTimeout(() => {
-    //   window.L2Dwidget.init({
-    //     pluginRootPath: '../static/plugins/live2dw/',
-    //     pluginJsPath: 'lib/',
-    //     pluginModelPath: 'live2d-widget-model-haru_1/assets/', //中间这个haru_2就是你的老婆,想换个老婆,换这个就可以了
-    //     tagMode: false,
-    //     debug: false,
-    //     model: {
-    //       jsonPath: '../static/plugins/live2dw/live2d-widget-model-haru_1/assets/haru01.model.json',
-    //     },
-    //     display: { position: 'left', width: 150, height: 400 }, //调整大小,和位置
-    //     mobile: { show: true }, //要不要盯着你的鼠标看
-    //     log: false,
-    //   })
-    // }, 1000)
+    //看板娘初始化
+    setTimeout(() => {
+      window.L2Dwidget.init({
+        pluginRootPath: '../static/plugins/live2dw/',
+        pluginJsPath: 'lib/',
+        pluginModelPath: 'live2d-widget-model-haru_1/assets/', //中间这个haru_2就是你的老婆,想换个老婆,换这个就可以了
+        tagMode: false,
+        debug: false,
+        model: {
+          jsonPath: '../static/plugins/live2dw/live2d-widget-model-haru_1/assets/haru01.model.json',
+        },
+        display: { position: 'left', width: 150, height: 400 }, //调整大小,和位置
+        mobile: { show: true }, //要不要盯着你的鼠标看
+        log: false,
+      })
+    }, 1000)
   },
 }
 </script>

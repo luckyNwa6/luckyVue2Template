@@ -16,10 +16,10 @@ module.exports = {
         ? {}
         : {
             '/proxyApi': {
-              target: 'http://demo.renren.io/luckyAdmin/',
+              target: 'http://localhost:10086/luckyAdmin/',
               changeOrigin: true,
               pathRewrite: {
-                '^/proxyApi': '/',
+                '^/proxyApi': '',
               },
             },
           },
