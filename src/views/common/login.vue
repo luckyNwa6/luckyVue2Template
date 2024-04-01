@@ -11,10 +11,8 @@
         </el-form-item>
         <div style="display: flex; justify-content: left; margin-bottom: 10px">
           <input v-model="yzmInput" placeholder="验证码" autocomplete="off" class="yzm" />
-
           <input type="button" class="yzmF" v-model="yzmm" @click="refreshYzm" />
         </div>
-
         <el-form-item>
           <!-- <el-button type="primary" @click="login">登录</el-button> -->
           <ViButton v-preventReClick @click="login">登录</ViButton>
@@ -48,7 +46,6 @@
 <script>
 import ViButton from '@luckynwa-lib/vi-button'
 import '@luckynwa-lib/vi-button/dist/index.css'
-
 import { getQQ, getPersonInfo, reqLogin } from '@/api/login'
 import { yh } from '@/assets/js/yinHua.js'
 
@@ -57,8 +54,8 @@ export default {
   data() {
     return {
       form: {
-        acc: 'admin',
-        pwd: '123456',
+        acc: 'luckyNwa',
+        pwd: '',
       },
       yzmInput: '',
       yzmm: '',
@@ -81,7 +78,7 @@ export default {
     login() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          if (this.yzmInput.toLowerCase() === this.yzmm.toLowerCase()) {
+          if (this.yzmInput.toLowerCase() !== this.yzmm.toLowerCase()) {
             this.failMsg('验证码有误！')
             this.yzmm = this.$options.methods.showCode()
           } else {
@@ -184,7 +181,8 @@ export default {
         tagMode: false,
         debug: false,
         model: {
-          jsonPath: '../static/plugins/live2dw/live2d-widget-model-haru_1/assets/haru01.model.json',
+          // jsonPath: '../static/plugins/live2dw/live2d-widget-model-haru_1/assets/haru01.model.json', //本地
+          jsonPath: window.SITE_CONFIG.cdnUrl + '/static/plugins/live2dw/live2d-widget-model-haru_1/assets/haru01.model.json', //线上
         },
         display: { position: 'left', width: 150, height: 400 }, //调整大小,和位置
         mobile: { show: true }, //要不要盯着你的鼠标看
