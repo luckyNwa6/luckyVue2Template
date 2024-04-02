@@ -16,7 +16,7 @@ module.exports = {
         ? {}
         : {
             '/proxyApi': {
-              target: 'http://localhost:10086/luckyAdmin/',
+              target: 'http://luckynwa.top:10086/luckyAdmin/',
               changeOrigin: true,
               pathRewrite: {
                 '^/proxyApi': '',

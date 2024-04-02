@@ -6,7 +6,7 @@
           <icon-svg name="shouye" class="site-sidebar__menu-icon"></icon-svg>
           <span slot="title">首页</span>
         </el-menu-item>
-        <el-submenu index="demo">
+        <!-- <el-submenu index="demo">
           <template slot="title">
             <icon-svg name="shoucang" class="site-sidebar__menu-icon"></icon-svg>
             <span>demo</span>
@@ -19,7 +19,7 @@
             <icon-svg name="editor" class="site-sidebar__menu-icon"></icon-svg>
             <span slot="title">ueditor</span>
           </el-menu-item>
-        </el-submenu>
+        </el-submenu> -->
         <sub-menu v-for="menu in menuList" :key="menu.menuId" :menu="menu" :dynamicMenuRoutes="dynamicMenuRoutes"></sub-menu>
       </el-menu>
     </div>
@@ -95,10 +95,10 @@ export default {
     routeHandle(route) {
       if (route.meta.isTab) {
         // tab选中, 不存在先添加
-        var tab = this.mainTabs.filter((item) => item.name === route.name)[0]
+        var tab = this.mainTabs.filter(item => item.name === route.name)[0]
         if (!tab) {
           if (route.meta.isDynamic) {
-            route = this.dynamicMenuRoutes.filter((item) => item.name === route.name)[0]
+            route = this.dynamicMenuRoutes.filter(item => item.name === route.name)[0]
             if (!route) {
               return console.error('未能找到可用标签页!')
             }

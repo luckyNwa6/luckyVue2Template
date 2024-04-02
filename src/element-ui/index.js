@@ -42,6 +42,7 @@ import {
   Alert,
   Slider,
   Icon,
+  Drawer,
   Row,
   Col,
   Upload,
@@ -95,6 +96,8 @@ Vue.use(OptionGroup)
 Vue.use(Button)
 Vue.use(ButtonGroup)
 Vue.use(Table)
+Vue.use(Drawer)
+
 Vue.use(TableColumn)
 Vue.use(DatePicker)
 Vue.use(TimeSelect)

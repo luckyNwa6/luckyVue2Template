@@ -42,7 +42,7 @@ Vue.directive('preventReClick', {
     })
   },
 })
-
+const lucky = [`😳欢迎使用小维后台管理系统😳`, '  💕2024 By luckyNwa']
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
@@ -51,3 +51,4 @@ new Vue({
   template: '<App/>',
   components: { App },
 })
+console.log(`%c  ${lucky[0]}  %c  \n${lucky[1]}`, 'color:#39c5bb', 'color:#39c5bb')
